@@ -50,4 +50,9 @@ class PageController extends Controller
     {
         return view('pages.report');
     }
+
+    public function user()
+    {
+        return view('pages.user');
+    }
 }

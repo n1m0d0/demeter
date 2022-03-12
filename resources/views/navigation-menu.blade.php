@@ -15,6 +15,10 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
+                    @role('admin')
+                    <x-jet-nav-link href="{{ route('page.user') }}" :active="request()->routeIs('page.user')">
+                        Usuario
+                    </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('page.category') }}" :active="request()->routeIs('page.category')">
                         Categoria
                     </x-jet-nav-link>
@@ -27,6 +31,8 @@
                     <x-jet-nav-link href="{{ route('page.way') }}" :active="request()->routeIs('page.way')">
                         Manera
                     </x-jet-nav-link>
+                    @endrole
+                    @role('admin|user')
                     <x-jet-nav-link href="{{ route('page.client') }}" :active="request()->routeIs('page.client')">
                         Cliente
                     </x-jet-nav-link>
@@ -39,9 +45,12 @@
                     <x-jet-nav-link href="{{ route('page.calendar') }}" :active="request()->routeIs('page.calendar')">
                         Calendario
                     </x-jet-nav-link>
+                    @endrole
+                    @role('admin|report')
                     <x-jet-nav-link href="{{ route('page.report') }}" :active="request()->routeIs('page.report')">
                         Reporte
                     </x-jet-nav-link>
+                    @endrole
                 </div>
             </div>
 
@@ -168,6 +177,10 @@
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
+            @role('admin')
+            <x-jet-responsive-nav-link href="{{ route('page.user') }}" :active="request()->routeIs('page.user')">
+                Usuario
+            </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('page.category') }}" :active="request()->routeIs('page.category')">
                 Categoria
             </x-jet-responsive-nav-link>
@@ -180,6 +193,8 @@
             <x-jet-responsive-nav-link href="{{ route('page.way') }}" :active="request()->routeIs('page.way')">
                 Manera
             </x-jet-responsive-nav-link>
+            @endrole
+            @role('admin|user')
             <x-jet-responsive-nav-link href="{{ route('page.client') }}" :active="request()->routeIs('page.client')">
                 Cliente
             </x-jet-responsive-nav-link>
@@ -192,9 +207,12 @@
             <x-jet-responsive-nav-link href="{{ route('page.calendar') }}" :active="request()->routeIs('page.calendar')">
                 Calendario
             </x-jet-responsive-nav-link>
+            @endrole
+            @role('admin|report')
             <x-jet-responsive-nav-link href="{{ route('page.report') }}" :active="request()->routeIs('page.report')">
                 Reporte
             </x-jet-responsive-nav-link>
+            @endrole
         </div>
 
         <!-- Responsive Settings Options -->

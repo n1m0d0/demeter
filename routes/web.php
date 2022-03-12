@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
@@ -31,5 +31,6 @@ Route::controller(PageController::class)->group(function () {
     Route::get('order', 'order')->name('page.order')->middleware(['auth:sanctum', 'verified']);
     Route::get('control', 'control')->name('page.control')->middleware(['auth:sanctum', 'verified']);
     Route::get('calendar', 'calendar')->name('page.calendar')->middleware(['auth:sanctum', 'verified']);    
-    Route::get('report', 'report')->name('page.report')->middleware(['auth:sanctum', 'verified']);
+    Route::get('report', 'report')->name('page.report')->middleware(['auth:sanctum', 'verified']);   
+    Route::get('user', 'user')->name('page.user')->middleware(['auth:sanctum', 'verified']);
 });
