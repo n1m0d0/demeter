@@ -1102,9 +1102,6 @@ select {
 .h-20 {
   height: 5rem;
 }
-.h-24 {
-  height: 6rem;
-}
 .min-h-screen {
   min-height: 100vh;
 }
@@ -1150,14 +1147,8 @@ select {
 .w-20 {
   width: 5rem;
 }
-.w-24 {
-  width: 6rem;
-}
 .w-1\/2 {
   width: 50%;
-}
-.w-9 {
-  width: 2.25rem;
 }
 .min-w-0 {
   min-width: 0px;
@@ -1874,10 +1865,6 @@ select {
 .hover\:text-gray-100:hover {
   --tw-text-opacity: 1;
   color: rgb(243 244 246 / var(--tw-text-opacity));
-}
-.hover\:text-green-500:hover {
-  --tw-text-opacity: 1;
-  color: rgb(34 197 94 / var(--tw-text-opacity));
 }
 .focus\:z-10:focus {
   z-index: 10;

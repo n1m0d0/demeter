@@ -254,6 +254,7 @@
                                         </td>
                                         <td class="p-3 ">
                                             @foreach ($detail->personalizations as $personalization)
+                                                @if ($personalization->status == 1)                                                    
                                                 <ul>
                                                     <li>
                                                         <div class="flex justify-start items-center mt-2 gap-2">
@@ -262,9 +263,16 @@
                                                                 <img src="{{ Storage::url($personalization->image) }}"
                                                                     class="rounded-full h-10 w-10 object-cover">
                                                             @endif
+                                                            <x-tooltip tooltip="Eliminar">
+                                                                <a wire:click='deletePersonalization({{ $personalization->id }})'
+                                                                    class="cursor-pointer">
+                                                                    <x-fas-trash-can class="w-6 h-6 text-red-500 hover:text-gray-100" />
+                                                                </a>
+                                                            </x-tooltip>
                                                         </div>
                                                     </li>
                                                 </ul>
+                                                @endif
                                             @endforeach
                                         </td>
                                         <td class="p-3 flex gap-1 items-center">

@@ -197,6 +197,13 @@ class ComponentOrder extends Component
         $this->personalization = false;
     }
 
+    public function deletePersonalization($id)
+    {
+        $detail = Personalization::find($id);
+        $detail->status = Personalization::INACTIVO;
+        $detail->save();
+    }
+
     public function activeOrder()
     {
         $order = Order::find($this->order_id);

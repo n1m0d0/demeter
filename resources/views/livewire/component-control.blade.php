@@ -54,7 +54,7 @@
                                                         {{ $personalization->description }}
                                                         @if ($personalization->image != null)
                                                             <img src="{{ Storage::url($personalization->image) }}"
-                                                                class="rounded-full h-10 w-10 object-cover">
+                                                                class="rounded-full h-10 w-10 object-cover" data-action="zoom">
                                                         @endif
                                                     </div>
                                                 </li>
