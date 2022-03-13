@@ -12,4 +12,12 @@
             </div>
         </div>
     </div>
+    @push('scripts')
+        <script type="text/javascript">
+            function clickToCopyText(contentToCopy) {
+                var textContent = document.getElementById(contentToCopy).innerText;
+                navigator.clipboard.writeText(textContent);
+            }
+        </script>
+    @endpush
 </x-app-layout>

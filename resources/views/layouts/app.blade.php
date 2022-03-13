@@ -42,5 +42,22 @@
         @stack('modals')
 
         @livewireScripts
+
+        @stack('scripts')
+        <script>
+            window.addEventListener('info', event => {
+                toastr.info(event.detail.message)
+            })
+        </script>
+        <script>
+            window.addEventListener('success', event => {
+                toastr.success(event.detail.message)
+            })
+        </script>
+        <script>
+            window.addEventListener('warning', event => {
+                toastr.warning(event.detail.message)
+            })
+        </script>
     </body>
 </html>

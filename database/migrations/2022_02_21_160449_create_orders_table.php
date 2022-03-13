@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('way_id');
             $table->dateTime('delivery');
             $table->string('received_by');
-            $table->string('address');
+            $table->string('address')->nullable();
             $table->float('advance', 10, 2)->default(0);
             $table->enum('status', [
                 Order::REGISTRADO,

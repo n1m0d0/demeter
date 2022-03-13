@@ -83,6 +83,11 @@
                                     {{ $order->delivery }}
                                 </td>
                                 <td class="p-3 flex gap-1 items-center">
+                                    <x-tooltip tooltip="Mensaje">
+                                        <a wire:click='modal({{ $order->id }})' class="cursor-pointer">
+                                            <x-fas-file-word class="w-6 h-6 text-blue-500 hover:text-gray-100" />
+                                        </a>
+                                    </x-tooltip>
                                     <x-tooltip tooltip="Entregar">
                                         <a wire:click='delivered({{ $order->id }})' class="cursor-pointer">
                                             <x-fas-check-circle class="w-6 h-6 text-green-500 hover:text-gray-100" />
@@ -101,4 +106,27 @@
             </div>
         </div>
     </div>
+    <x-jet-dialog-modal wire:model="message">
+        <x-slot name="title">
+            <div class="flex col-span-6 sm:col-span-4 items-center">
+                <x-fas-file-word class="text-red-500 h-6 w-6 mr-2" />
+                Mensaje
+            </div>
+        </x-slot>
+
+        <x-slot name="content">
+            <P id="paragraph">
+                {{ $paragraph }}
+            </P>
+        </x-slot>
+
+        <x-slot name="footer">            
+            <x-jet-danger-button wire:click="$set('message', false)" wire:loading.attr="disabled">
+                Cerrar
+            </x-jet-danger-button>
+            <x-jet-secondary-button wire:click="$set('message', false)" onclick="clickToCopyText('paragraph')">
+                Copiar
+            </x-jet-secondary-button>
+        </x-slot>
+    </x-jet-dialog-modal>
 </div>

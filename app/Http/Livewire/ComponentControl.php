@@ -20,6 +20,9 @@ class ComponentControl extends Component
     public $beginning;
     public $finish;
 
+    public $message = false;
+    public $paragraph;
+
     protected $queryString = [
         'search' => ['except' => ''],
         'page' => ['except' => 1],
@@ -65,6 +68,13 @@ class ComponentControl extends Component
             $detail->status = Detail::INACTIVO;
             $detail->save();
         }
+    }
+
+    public function modal($id)
+    {
+        $order = Order::find($id);
+        $this->paragraph = 'Estimado Cliente ' . $order->client->name . ' gracias por realizar su compra en la pasteleria';
+        $this->message = true;
     }
 
     public function resetSearch()
