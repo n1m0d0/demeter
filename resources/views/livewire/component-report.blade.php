@@ -6,7 +6,7 @@
             <button wire:click='resetDate' class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                 Reiniciar
             </button>
-            <button wire:click='export' class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+            <button wire:click='exportExcel' class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                 Exportar
             </button>
         </div>
