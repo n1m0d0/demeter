@@ -3,12 +3,10 @@
 namespace App\Http\Livewire;
 
 use App\Models\Detail;
-use DateTimeZone;
 use App\Models\Order;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
 class ComponentControl extends Component
@@ -46,7 +44,7 @@ class ComponentControl extends Component
             $this->updatingSearch();
             $Query = $Query->whereBetween('delivery', [$this->beginning, $this->finish]);
         }
-        $orders = $Query->where('status', Order::ACTIVO)->paginate(10);
+        $orders = $Query->where('status', Order::ACTIVO)->orderBy('id', 'DESC')->paginate(10);
         return view('livewire.component-control', compact('orders'));
     }
 
@@ -55,6 +53,8 @@ class ComponentControl extends Component
         $order = Order::find($id);
         $order->status = Order::ENTREGADO;
         $order->save();
+
+        $this->resetSearch();
     }
 
     public function delete($id)
@@ -68,6 +68,8 @@ class ComponentControl extends Component
             $detail->status = Detail::INACTIVO;
             $detail->save();
         }
+
+        $this->resetSearch();
     }
 
     public function modal($id)

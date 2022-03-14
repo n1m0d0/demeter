@@ -36,30 +36,37 @@
                                 </td>
                                 <td class="p-3 ">
                                     @foreach ($order->details as $detail)
-                                        <ul>
-                                            <li class="list-disc list-inside">
-                                                Producto: {{ $detail->product->name }}
-                                                Precio: {{ $detail->price }}
-                                                cantidad: {{ $detail->amount }}
-                                            </li>
-                                        </ul>
+                                        @if ($detail->status == 1)
+                                            <ul>
+                                                <li class="list-disc list-inside">
+                                                    Producto: {{ $detail->product->name }}
+                                                    Precio: {{ $detail->price }}
+                                                    cantidad: {{ $detail->amount }}
+                                                </li>
+                                            </ul>
+                                        @endif
                                     @endforeach
                                 </td>
                                 <td class="p-3 ">
                                     @foreach ($order->details as $detail)
-                                        @foreach ($detail->personalizations as $personalization)
-                                            <ul>
-                                                <li class="list-disc list-inside">
-                                                    <div class="flex justify-start items-center mt-2 gap-1">
-                                                        {{ $personalization->description }}
-                                                        @if ($personalization->image != null)
-                                                            <img src="{{ Storage::url($personalization->image) }}"
-                                                                class="rounded-full h-10 w-10 object-cover" data-action="zoom">
-                                                        @endif
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        @endforeach
+                                        @if ($detail->status == 1)
+                                            @foreach ($detail->personalizations as $personalization)
+                                                @if ($personalization->status == 1)
+                                                    <ul>
+                                                        <li class="list-disc list-inside">
+                                                            <div class="flex justify-start items-center mt-2 gap-1">
+                                                                {{ $personalization->description }}
+                                                                @if ($personalization->image != null)
+                                                                    <img src="{{ Storage::url($personalization->image) }}"
+                                                                        class="rounded-full h-10 w-10 object-cover"
+                                                                        data-action="zoom">
+                                                                @endif
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                @endif
+                                            @endforeach
+                                        @endif
                                     @endforeach
                                 </td>
                                 <td class="p-3 ">
@@ -67,9 +74,11 @@
                                         $suma = 0;
                                     @endphp
                                     @foreach ($order->details as $detail)
-                                        @php
-                                            $suma += $detail->price * $detail->amount;
-                                        @endphp
+                                        @if ($detail->status == 1)
+                                            @php
+                                                $suma += $detail->price * $detail->amount;
+                                            @endphp
+                                        @endif
                                     @endforeach
                                     {{ $suma }}
                                 </td>
@@ -120,7 +129,7 @@
             </P>
         </x-slot>
 
-        <x-slot name="footer">            
+        <x-slot name="footer">
             <x-jet-danger-button wire:click="$set('message', false)" wire:loading.attr="disabled">
                 Cerrar
             </x-jet-danger-button>

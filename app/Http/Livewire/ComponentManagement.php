@@ -2,27 +2,31 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Client;
-use App\Models\Detail;
-use App\Models\Order;
-use App\Models\Personalization;
-use App\Models\Product;
+use Carbon\Carbon;
 use App\Models\Way;
+use App\Models\Order;
+use App\Models\Detail;
+use App\Models\Product;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
+use App\Models\Personalization;
+use Illuminate\Database\Eloquent\Builder;
 
-class ComponentOrder extends Component
+class ComponentManagement extends Component
 {
     use WithPagination;
     use WithFileUploads;
 
-    public $iteration;
-    public $searchClient;
-    public $searchProduct;
+    public $action;
     public $step;
-    public $formOrder = false;
-    public $personalization = false;
+    public $search;
+    public $searchProduct;
+    public $beginning;
+    public $finish;
+    public $iteration;
+
+    public $order_id;
 
     public $client_id;
     public $way_id;
@@ -32,8 +36,8 @@ class ComponentOrder extends Component
     public $advance;
     public $nameClient;
     public $telephoneClient;
+    public $deliveryOld;
 
-    public $order_id;
     public $product_id;
     public $price;
     public $amount;
@@ -42,10 +46,18 @@ class ComponentOrder extends Component
     public $description;
     public $image;
     public $detail_id;
+    
+    public $personalization = false;
+
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'page' => ['except' => 1],
+    ];
 
     public function mount()
     {
-        $this->searchClient = '';
+        $this->action = 'list';
+        $this->search = '';
         $this->searchProduct = '';
         $this->step = 1;
         $this->iteration = rand(0, 999);
@@ -53,10 +65,12 @@ class ComponentOrder extends Component
 
     public function render()
     {
-        $QueryClient = Client::query();
-        if ($this->searchClient != null) {
+        $Query = Order::query();
+        if ($this->search != null) {
             $this->updatingSearch();
-            $QueryClient = $QueryClient->where('name', 'like', '%' . $this->searchClient . '%');
+            $Query = Order::whereHas('client', function (Builder $query) {
+                $query->where('name', 'like', '%' . $this->search . '%');
+            });
         }
 
         $QueryProduct = Product::query();
@@ -73,21 +87,67 @@ class ComponentOrder extends Component
             $details = null;
         }
 
-        $clients = $QueryClient->where('status', Client::ACTIVO)->orderBy('id', 'DESC')->paginate(5);
+        $orders = $Query->where('status', '!=', Order::ENTREGADO)->where('status', '!=', Order::INACTIVO)->paginate(10);
         $ways = Way::where('status', Way::ACTIVO)->orderBy('id', 'DESC')->get();
         $products = $QueryProduct->where('status', Product::ACTIVO)->orderBy('id', 'DESC')->paginate(5);
-        return view('livewire.component-order', compact('clients', 'ways', 'products', 'details'));
+        return view('livewire.component-management', compact('orders', 'ways', 'products', 'details'));
     }
 
-    public function pickClient($id)
+    public function edit($id)
     {
-        $this->client_id = $id;
-        $client =  Client::find($id);
-        $this->nameClient = $client->name;
-        $this->telephoneClient = $client->telephone;
-        $this->received_by = $client->name;
+        $this->clearOrder();
 
-        $this->formOrder = true;
+        $this->order_id = $id;
+
+        $order = Order::find($id);
+
+        $this->client_id = $order->client_id;
+        $this->way_id = $order->way_id;
+        $this->delivery = $order->delivery;
+        $this->received_by = $order->received_by;
+        $this->address = $order->address;
+        $this->advance = $order->advance;
+        $this->nameClient = $order->client->name;
+        $this->telephoneClient = $order->client->telephone;
+        $this->deliveryOld = Carbon::parse($this->delivery)->format('Y-m-d H:i:s');
+
+        $this->action = 'edit';
+
+        $this->resetSearch();
+    }
+
+    public function update()
+    {
+        $this->validate([
+            'client_id' => 'required',
+            'way_id' => 'required',
+            'delivery' => 'required|date',
+            'received_by' => 'required'
+        ]);
+
+        $order = Order::find($this->order_id);
+        $order->client_id = $this->client_id;
+        $order->way_id = $this->way_id;
+        $order->delivery = $this->delivery;
+        $order->received_by = $this->received_by;
+        $order->address = $this->address;
+        $order->save();
+
+        $this->resetSearch();
+        $this->step = 2;
+    }
+
+    public function delete($id)
+    {
+        $order = Order::find($id);
+        $order->status = Order::INACTIVO;
+        $order->save();
+
+        foreach ($order->details as $detail) {
+            $detail->status = Detail::INACTIVO;
+            $detail->save();
+        }
+
         $this->resetSearch();
     }
 
@@ -100,30 +160,6 @@ class ComponentOrder extends Component
 
         $this->formOrder = true;
         $this->resetSearch();
-    }
-
-    public function storeOrder()
-    {
-        $this->validate([
-            'client_id' => 'required',
-            'way_id' => 'required',
-            'delivery' => 'required|date',
-            'received_by' => 'required'
-        ]);
-
-        $order = new Order();
-        $order->client_id = $this->client_id;
-        $order->way_id = $this->way_id;
-        $order->delivery = $this->delivery;
-        $order->received_by = $this->received_by;
-        $order->address = $this->address;
-        $order->save();
-
-        $this->order_id = $order->id;
-
-        $this->formOrder = false;
-        $this->step = 2;
-        $this->clearOrder();
     }
 
     public function storeDetail()
@@ -211,6 +247,7 @@ class ComponentOrder extends Component
         $order->save();
 
         $this->step = 1;
+        $this->action = 'list';
         $this->order_id = null;
         $this->clearDetail();
     }
@@ -224,8 +261,7 @@ class ComponentOrder extends Component
 
     public function clearOrder()
     {
-        $this->reset(['nameClient', 'telephoneClient', 'client_id', 'way_id', 'delivery', 'address']);
-        $this->formOrder = false;
+        $this->reset(['nameClient', 'telephoneClient', 'order_id', 'client_id', 'way_id', 'delivery', 'address', 'advance']);
     }
 
     public function clearDetail()
@@ -249,7 +285,7 @@ class ComponentOrder extends Component
 
     public function resetSearch()
     {
-        $this->reset(['searchClient', 'searchProduct']);
+        $this->reset(['search', 'searchProduct']);
         $this->updatingSearch();
     }
 
