@@ -89,6 +89,9 @@
                                     {{ $suma - $order->advance }}
                                 </td>
                                 <td class="p-3 ">
+                                    @if ($order->address != null)
+                                        {{ $order->address }} -
+                                    @endif
                                     {{ $order->delivery }}
                                 </td>
                                 <td class="p-3 flex gap-1 items-center">

@@ -29,7 +29,7 @@
                         Producto
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{ route('page.way') }}" :active="request()->routeIs('page.way')">
-                        Manera
+                        Contacto
                     </x-jet-nav-link>
                     @endrole
                     @role('admin|user')
@@ -191,7 +191,7 @@
                 Producto
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('page.way') }}" :active="request()->routeIs('page.way')">
-                Manera
+                Contacto
             </x-jet-responsive-nav-link>
             @endrole
             @role('admin|user')

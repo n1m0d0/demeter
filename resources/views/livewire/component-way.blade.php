@@ -9,16 +9,16 @@
         <div class="m-2">
             @if ($action == 'create')
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    Nueva Manera
+                    Nueva Contacto
                 </h2>
             @else
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    Editar Manera
+                    Editar Contacto
                 </h2>
             @endif
         </div>
         <div class="m-2">
-            <x-jet-label for="name" value="Nombre de la Manera" />
+            <x-jet-label for="name" value="Nombre del Contacto" />
             <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model='name' />
             <x-jet-input-error for="name" class="mt-2" />
         </div>
@@ -41,7 +41,7 @@
         <table class="table w-full text-gray-400 border-separate space-y-6 text-sm">
             <thead class="bg-blue-500 text-white">
                 <tr class="uppercase">
-                    <th class="p-3 text-left">Manera</th>
+                    <th class="p-3 text-left">Contacto</th>
                     <th class="p-3 text-left">Acciones</th>
                 </tr>
             </thead>
