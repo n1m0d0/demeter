@@ -71,6 +71,7 @@ class ComponentProduct extends Component
         $product->save();
 
         $this->clear();
+        $this->alerts('success', 'Producto Registrado Correctamente');
     }
 
     public function edit($id)
@@ -117,6 +118,7 @@ class ComponentProduct extends Component
 
         $this->action = "create";
         $this->clear();
+        $this->alerts('info', 'Producto Editado Correctamente');
     }
 
     public function delete($id)
@@ -126,6 +128,7 @@ class ComponentProduct extends Component
         $product->save();
 
         $this->clear();
+        $this->alerts('warning', 'Producto Eliminado Correctamente');
     }
 
     public function clear()
@@ -144,5 +147,10 @@ class ComponentProduct extends Component
     public function updatingSearch()
     {
         $this->resetPage();
+    }
+
+    public function alerts($typeMessage, $message)
+    {
+        $this->dispatchBrowserEvent($typeMessage, ['message' => $message]);
     }
 }

@@ -24,7 +24,7 @@
         </div>
         <div class="m-2">
             <x-jet-label for="telephone" value="telephone" />
-            <x-jet-input id="telephone" type="text" class="mt-1 block w-full" wire:model='telephone' />
+            <x-jet-input id="telephone" type="number" class="mt-1 block w-full" wire:model='telephone' />
             <x-jet-input-error for="telephone" class="mt-2" />
         </div>
         <div class="m-2">

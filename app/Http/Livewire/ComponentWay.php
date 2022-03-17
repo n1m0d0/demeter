@@ -55,6 +55,7 @@ class ComponentWay extends Component
         $way->save();
 
         $this->clear();
+        $this->alerts('success', 'Contacto Registrado Correctamente');
     }
 
     public function edit($id)
@@ -77,6 +78,7 @@ class ComponentWay extends Component
 
         $this->action = "create";
         $this->clear();
+        $this->alerts('info', 'Contacto Editado Correctamente');
     }
 
     public function delete($id)
@@ -86,6 +88,7 @@ class ComponentWay extends Component
         $way->save();
 
         $this->clear();
+        $this->alerts('warning', 'Contacto Eliminado Correctamente');
     }
 
     public function clear()
@@ -104,5 +107,10 @@ class ComponentWay extends Component
     public function updatingSearch()
     {
         $this->resetPage();
+    }
+
+    public function alerts($typeMessage, $message)
+    {
+        $this->dispatchBrowserEvent($typeMessage, ['message' => $message]);
     }
 }

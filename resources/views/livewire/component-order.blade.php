@@ -117,7 +117,7 @@
                 @if ($formOrder)
                     <div class="m-2">
                         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                            Nuevo Orden
+                            Nuevo Pedido
                         </h2>
                     </div>
                     <div class="m-2">
@@ -171,7 +171,7 @@
             @if ($step == 2)
                 <div class="m-2">
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                        Orden Nro. {{ $order_id }}
+                        Pedido Nro. {{ $order_id }}
                     </h2>
                 </div>
                 <div class="m-2">
@@ -201,7 +201,7 @@
             @if ($step == 3)
                 <div class="m-2">
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                        Orden Nro. {{ $order_id }}
+                        Pedido Nro. {{ $order_id }}
                     </h2>
                 </div>
                 <div class="m-2">

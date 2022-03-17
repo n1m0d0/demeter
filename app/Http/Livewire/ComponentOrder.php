@@ -213,6 +213,7 @@ class ComponentOrder extends Component
         $this->step = 1;
         $this->order_id = null;
         $this->clearDetail();
+        $this->alerts('success', 'Pedido Registrado Correctamente');
     }
 
     public function modal($id)
@@ -256,5 +257,10 @@ class ComponentOrder extends Component
     public function updatingSearch()
     {
         $this->resetPage();
+    }
+
+    public function alerts($typeMessage, $message)
+    {
+        $this->dispatchBrowserEvent($typeMessage, ['message' => $message]);
     }
 }

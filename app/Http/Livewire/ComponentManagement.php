@@ -149,6 +149,7 @@ class ComponentManagement extends Component
         }
 
         $this->resetSearch();
+        $this->alerts('warning', 'Pedido Eliminado Correctamente');
     }
 
     public function pickProduct($id)
@@ -250,6 +251,7 @@ class ComponentManagement extends Component
         $this->action = 'list';
         $this->order_id = null;
         $this->clearDetail();
+        $this->alerts('info', 'Pedido Editado Correctamente');
     }
 
     public function modal($id)
@@ -292,5 +294,10 @@ class ComponentManagement extends Component
     public function updatingSearch()
     {
         $this->resetPage();
+    }
+
+    public function alerts($typeMessage, $message)
+    {
+        $this->dispatchBrowserEvent($typeMessage, ['message' => $message]);
     }
 }

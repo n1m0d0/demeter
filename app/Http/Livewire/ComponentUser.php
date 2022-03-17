@@ -68,6 +68,7 @@ class ComponentUser extends Component
         $user->assignRole($this->role);
 
         $this->clear();
+        $this->alerts('success', 'Usuario Registrado Correctamente');
     }
 
     public function edit($id)
@@ -121,6 +122,7 @@ class ComponentUser extends Component
 
         $this->action = "create";
         $this->clear();
+        $this->alerts('info', 'Usuario Editado Correctamente');
     }
 
     public function delete($id)
@@ -130,6 +132,7 @@ class ComponentUser extends Component
         $user->save();
 
         $this->clear();
+        $this->alerts('warning', 'Usuario Eliminado Correctamente');
     }
 
     public function clear()
@@ -148,5 +151,10 @@ class ComponentUser extends Component
     public function updatingSearch()
     {
         $this->resetPage();
+    }
+
+    public function alerts($typeMessage, $message)
+    {
+        $this->dispatchBrowserEvent($typeMessage, ['message' => $message]);
     }
 }

@@ -2,8 +2,9 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Category;
+use App\Models\Product;
 use Livewire\Component;
+use App\Models\Category;
 use App\Models\Subcategory;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
@@ -64,6 +65,7 @@ class ComponentSubcategory extends Component
         $subcategory->save();
 
         $this->clear();
+        $this->alerts('success', 'Subcategoria Registrada Correctamente');
     }
 
     public function edit($id)
@@ -102,6 +104,7 @@ class ComponentSubcategory extends Component
 
         $this->action = "create";
         $this->clear();
+        $this->alerts('info', 'Subcategoria Editada Correctamente');
     }
 
     public function delete($id)
@@ -110,7 +113,13 @@ class ComponentSubcategory extends Component
         $subcategory->status = Subcategory::INACTIVO;
         $subcategory->save();
 
+        foreach($subcategory->products as $product){
+            $product->status = Product::INACTIVO;
+            $product->save();
+        }
+
         $this->clear();
+        $this->alerts('warning', 'Subcategoria Eliminada Correctamente');
     }
 
     public function clear()
@@ -129,5 +138,10 @@ class ComponentSubcategory extends Component
     public function updatingSearch()
     {
         $this->resetPage();
+    }
+
+    public function alerts($typeMessage, $message)
+    {
+        $this->dispatchBrowserEvent($typeMessage, ['message' => $message]);
     }
 }

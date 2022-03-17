@@ -55,6 +55,7 @@ class ComponentControl extends Component
         $order->save();
 
         $this->resetSearch();
+        $this->alerts('success', 'Se registro la entrega del pedido');
     }
 
     public function delete($id)
@@ -70,6 +71,7 @@ class ComponentControl extends Component
         }
 
         $this->resetSearch();
+        $this->alerts('warning', 'Se elimino el pedido');
     }
 
     public function modal($id)
@@ -88,5 +90,10 @@ class ComponentControl extends Component
     public function updatingSearch()
     {
         $this->resetPage();
+    }
+
+    public function alerts($typeMessage, $message)
+    {
+        $this->dispatchBrowserEvent($typeMessage, ['message' => $message]);
     }
 }
