@@ -30,9 +30,9 @@ class ComponentUser extends Component
     ];
 
     protected $rules = [
-        'name' => 'required',
-        'email' => 'required|unique:users',
-        'password' => 'required',
+        'name' => 'required|max:200',
+        'email' => 'required|unique:users|max:100',
+        'password' => 'required|min:8|max:100',
         'role' => 'required'
     ];
 
@@ -90,9 +90,9 @@ class ComponentUser extends Component
 
         if ($this->password != null) {
             $this->validate([
-                'name' => 'required',
-                'email' => ['required', Rule::unique('users')->ignore($this->user_id)],
-                'password' => 'required',
+                'name' => 'required|max:200',
+                'email' => ['required', 'max:100', Rule::unique('users')->ignore($this->user_id)],
+                'password' => 'required|min:8|max:100',
                 'role' => 'required'
             ]);
 
@@ -106,8 +106,8 @@ class ComponentUser extends Component
             $user->assignRole($this->role);
         } else {
             $this->validate([
-                'name' => 'required',
-                'email' => ['required', Rule::unique('users')->ignore($this->user_id)],
+                'name' => 'required|max:200',
+                'email' => ['required', 'max:100', Rule::unique('users')->ignore($this->user_id)],
                 'role' => 'required'
             ]);
 

@@ -47,8 +47,8 @@ class ComponentClient extends Component
     public function store()
     {
         $this->validate([
-            'name' => 'required',
-            'telephone' => 'required|unique:clients'
+            'name' => 'required|max:200',
+            'telephone' => 'required|max:8|unique:clients'
         ]);
 
         $client = new Client();
@@ -77,8 +77,8 @@ class ComponentClient extends Component
         $client = Client::find($this->client_id);
 
         $this->validate([
-            'name' => 'required',
-            'telephone' => ['required', Rule::unique('clients')->ignore($this->client_id)]
+            'name' => 'required|max:200',
+            'telephone' => ['required', 'max:8', Rule::unique('clients')->ignore($this->client_id)]
         ]);
 
         $client->name = $this->name;        

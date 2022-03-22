@@ -109,7 +109,7 @@ class ComponentManagement extends Component
         $this->advance = $order->advance;
         $this->nameClient = $order->client->name;
         $this->telephoneClient = $order->client->telephone;
-        $this->deliveryOld = Carbon::parse($this->delivery)->format('Y-m-d H:i:s');
+        $this->deliveryOld = Carbon::parse($this->delivery)->format('d-m-Y H:i');
 
         $this->action = 'edit';
 
@@ -122,7 +122,7 @@ class ComponentManagement extends Component
             'client_id' => 'required',
             'way_id' => 'required',
             'delivery' => 'required|date',
-            'received_by' => 'required'
+            'received_by' => 'required|max:200'
         ]);
 
         $order = Order::find($this->order_id);
@@ -168,8 +168,8 @@ class ComponentManagement extends Component
         $this->validate([
             'order_id' => 'required',
             'product_id' => 'required',
-            'price' => 'required|numeric',
-            'amount' => 'required|numeric'
+            'price' => 'required|numeric|max:100000',
+            'amount' => 'required|numeric|max:100000'
         ]);
 
         $detail = new Detail();
@@ -197,7 +197,7 @@ class ComponentManagement extends Component
     public function storeAdvance()
     {
         $this->validate([
-            'advance' => 'required',
+            'advance' => 'required|max:100000',
         ]);
 
         $order = Order::find($this->order_id);
@@ -212,7 +212,7 @@ class ComponentManagement extends Component
     {
         if ($this->image != null) {
             $this->validate([
-                'description' => 'required',
+                'description' => 'required|max:1000',
                 'image' => 'required|mimes:jpg,bmp,png|max:5120'
             ]);
             $personalization = new Personalization();
@@ -222,7 +222,7 @@ class ComponentManagement extends Component
             $personalization->save();
         } else {
             $this->validate([
-                'description' => 'required',
+                'description' => 'required|max:1000',
             ]);
             $personalization = new Personalization();
             $personalization->detail_id = $this->detail_id;

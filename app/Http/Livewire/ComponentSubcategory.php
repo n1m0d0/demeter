@@ -32,7 +32,7 @@ class ComponentSubcategory extends Component
 
     protected $rules = [
         'category_id' => 'required',
-        'name' => 'required',
+        'name' => 'required|max:200',
         'image' => 'required|mimes:jpg,bmp,png|max:5120'
     ];
 
@@ -95,7 +95,7 @@ class ComponentSubcategory extends Component
         } else {
             $this->validate([
                 'category_id' => 'required',
-                'name' => 'required'
+                'name' => 'required|max:200'
             ]);
             $subcategory->category_id = $this->category_id;
             $subcategory->name = $this->name;

@@ -32,13 +32,17 @@
             <x-jet-input id="password" type="password" class="mt-1 block w-full" wire:model='password' />
             <x-jet-input-error for="password" class="mt-2" />
         </div>
-        <select wire:model="role"
-            class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-            <option value="">Seleccione un opcion</option>
-            @foreach ($roles as $rol)
-                <option value="{{ $rol->name }}">{{ $rol->name }}</option>
-            @endforeach
-        </select>
+        <div class="m-2">
+            <x-jet-label for="role" value="Rol" />
+            <select wire:model="role"
+                class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                <option value="">Seleccione un opcion</option>
+                @foreach ($roles as $rol)
+                    <option value="{{ $rol->name }}">{{ $rol->name }}</option>
+                @endforeach
+            </select>
+            <x-jet-input-error for="role" class="mt-2" />
+        </div>
         <div class="m-2">
             <x-jet-danger-button wire:click="clear">
                 Cancelar
@@ -59,7 +63,7 @@
             <thead class="bg-blue-500 text-white">
                 <tr class="uppercase">
                     <th class="p-3 text-left">Nombre</th>
-                    <th class="p-3 text-left">Email</th>                    
+                    <th class="p-3 text-left">Email</th>
                     <th class="p-3 text-left">Rol</th>
                     <th class="p-3 text-left">Acciones</th>
                 </tr>

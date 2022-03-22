@@ -30,7 +30,7 @@ class ComponentCategory extends Component
     ];
 
     protected $rules = [
-        'name' => 'required',
+        'name' => 'required|max:200',
         'image' => 'required|mimes:jpg,bmp,png|max:5120'
     ];
 
@@ -89,7 +89,7 @@ class ComponentCategory extends Component
             $category->save();
         } else {
             $this->validate([
-                'name' => 'required'
+                'name' => 'required|max:200'
             ]);
             $category->name = $this->name;
             $category->save();

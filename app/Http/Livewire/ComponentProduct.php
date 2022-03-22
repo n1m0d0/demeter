@@ -33,10 +33,10 @@ class ComponentProduct extends Component
 
     protected $rules = [
         'subcategory_id' => 'required',
-        'name' => 'required',
-        'description' => 'required',
+        'name' => 'required|max:200',
+        'description' => 'required|max:1000',
         'image' => 'required|mimes:jpg,bmp,png|max:5120',
-        'price' => 'required|numeric'
+        'price' => 'required|numeric|max:100000'
     ];
 
     public function mount()
@@ -105,9 +105,9 @@ class ComponentProduct extends Component
         } else {
             $this->validate([
                 'subcategory_id' => 'required',
-                'name' => 'required',
-                'description' => 'required',
-                'price' => 'required|numeric'
+                'name' => 'required|max:200',
+                'description' => 'required|max:1000',
+                'price' => 'required|numeric|max:100000'
             ]);
             $product->subcategory_id = $this->subcategory_id;
             $product->name = $this->name;

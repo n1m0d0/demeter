@@ -108,7 +108,7 @@ class ComponentOrder extends Component
             'client_id' => 'required',
             'way_id' => 'required',
             'delivery' => 'required|date',
-            'received_by' => 'required'
+            'received_by' => 'required|max:200'
         ]);
 
         $order = new Order();
@@ -131,8 +131,8 @@ class ComponentOrder extends Component
         $this->validate([
             'order_id' => 'required',
             'product_id' => 'required',
-            'price' => 'required|numeric',
-            'amount' => 'required|numeric'
+            'price' => 'required|numeric|max:100000',
+            'amount' => 'required|numeric|100000'
         ]);
 
         $detail = new Detail();
@@ -160,7 +160,7 @@ class ComponentOrder extends Component
     public function storeAdvance()
     {
         $this->validate([
-            'advance' => 'required',
+            'advance' => 'required|max:100000',
         ]);
 
         $order = Order::find($this->order_id);
@@ -175,7 +175,7 @@ class ComponentOrder extends Component
     {
         if ($this->image != null) {
             $this->validate([
-                'description' => 'required',
+                'description' => 'required|max:1000',
                 'image' => 'required|mimes:jpg,bmp,png|max:5120'
             ]);
             $personalization = new Personalization();
@@ -185,7 +185,7 @@ class ComponentOrder extends Component
             $personalization->save();
         } else {
             $this->validate([
-                'description' => 'required',
+                'description' => 'required|max:1000',
             ]);
             $personalization = new Personalization();
             $personalization->detail_id = $this->detail_id;

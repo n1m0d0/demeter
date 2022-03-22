@@ -25,7 +25,7 @@ class ComponentWay extends Component
     ];
 
     protected $rules = [
-        'name' => 'required'
+        'name' => 'required|max:200'
     ];
 
     public function mount()
@@ -72,6 +72,8 @@ class ComponentWay extends Component
     public function update()
     {
         $way = Way::find($this->way_id);
+
+        $this->validate();
 
         $way->name = $this->name;
         $way->save();
